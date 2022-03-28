@@ -31,6 +31,18 @@ function get_one_say() {
         });
 }
 
+function get_bg_img() {
+    axios({
+        method: "get",
+        url: "/api/img/bg"
+    })
+        .then(function ({data: resp}) {
+            let background = document.getElementsByClassName("background-img");
+            background[0].style.backgroundImage = "url('" + resp.data.url +  "')";
+        });
+}
+
 document.ready(function () {
     get_one_say();
+    get_bg_img();
 })
