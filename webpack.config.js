@@ -6,6 +6,7 @@ const WebpackBar = require('webpackbar');
 const TerserPlugin = require("terser-webpack-plugin");
 const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 const BANNER = `${package.displayName} v${package.version}
@@ -34,7 +35,7 @@ module.exports = {
             }
         }, {
             test: /\.scss$/,
-            use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'resolve-url-loader', 'sass-loader']
         }]
     },
     output: {
@@ -43,7 +44,7 @@ module.exports = {
         devtoolNamespace: '',
         filename: 'static/js/[name].min.js'
     },
-    plugins: [ //TODO copy index.html
+    plugins: [
         new WebpackBar(),
         new ESLintPlugin({
             fix: true,
@@ -58,6 +59,11 @@ module.exports = {
             filename: 'static/css/[name].min.css'
         }),
         new RemoveEmptyScriptsPlugin(),
+        new CopyPlugin({
+            patterns: [
+                { from: "public", to: "." },
+            ],
+        }),
     ],
     devtool: 'nosources-source-map',
     optimization: {
