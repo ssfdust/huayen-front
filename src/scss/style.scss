@@ -4,21 +4,15 @@ $transition-time: .5s;
 $background-blur: 10px;
 $background-scale: 1.03;
 
+* {
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
     box-sizing: border-box;
-    overflow: hidden;
-    font-family: Raleway, sans-serif;
 }
 
 .main {
     width: 100%;
     height: 100%;
+    font-family: Raleway, sans-serif;
     background-color: $default-bg-color;
 
     .background,
@@ -35,13 +29,13 @@ body {
         background-position: center;
         background-repeat: no-repeat;
         background-image: url('/public/static/img/bg.jpg');
-        transition: all $transition-time;
-        animation: fade-blur 1s ease .5s both;
+        transition: all 1.5s;
     }
 
     &.blur .background {
         filter: blur($background-blur);
         transform: scale($background-scale);
+        opacity: 0.92;
     }
 
     @media screen and (min-width: 1088px) {
@@ -156,11 +150,27 @@ body {
 
                 .text {
                     position: relative;
-                    font-size: 36px;
                     text-shadow: 3px 3px 8px #00000075;
+                    transition: all 1s;
+
+                    @at-root .main:not(.blur) .onesay .text {
+                        text-shadow: 5px 5px 1px #00000075 !important;
+                        transform: translateY(10px) scale(1.01);
+                    }
 
                     >p {
-                        animation: fade-up 1s ease 2s both;
+                        opacity: 0;
+                        margin: 18px;
+                    }
+
+                    >p.phrase {
+                        font-size: 36px;
+                        text-align: center;
+                    }
+
+                    >p.quote {
+                        font-size: 20px;
+                        text-align: right;
                     }
 
                     &:before {
@@ -171,8 +181,16 @@ body {
                         right: 0;
                         height: 5px;
                         background-color: white;
-                        animation: line 1s ease 1.5s both;
+                        opacity: 0;
+                    }
 
+                    &.line-animed:before {
+                        animation: line 1s ease both;
+                    }
+
+
+                    &.text-animed>p {
+                        animation: fade-up 1s ease both;
                     }
                 }
             }
@@ -214,14 +232,6 @@ body {
 
             opacity: 1;
             transform: translateY(0);
-        }
-    }
-
-
-    @keyframes fade-blur {
-        to {
-            filter: blur($background-blur);
-            transform: scale($background-scale);
         }
     }
 
