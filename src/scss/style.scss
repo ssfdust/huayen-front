@@ -1,0 +1,228 @@
+$default-bg-color: black;
+$default-text-color: white;
+$transition-time: .5s;
+$background-blur: 10px;
+$background-scale: 1.03;
+
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: Raleway, sans-serif;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    background-color: $default-bg-color;
+
+    .background,
+    .container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .background {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url('/public/static/img/bg.jpg');
+        transition: all $transition-time;
+        animation: fade-blur 1s ease .5s both;
+    }
+
+    &.blur .background {
+        filter: blur($background-blur);
+        transform: scale($background-scale);
+    }
+
+    @media screen and (min-width: 1088px) {
+        .container {
+            width: 960px
+        }
+    }
+
+    @media screen and (min-width: 1280px) {
+        .container {
+            width: 1152px
+        }
+    }
+
+    @media screen and (min-width: 1472px) {
+        .container {
+            width: 1344px
+        }
+    }
+
+    a,
+    a:hover,
+    a:active {
+        text-decoration: none;
+        color: $default-text-color;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .container {
+        margin: 0 auto;
+        color: $default-text-color;
+        display: flex;
+        flex-direction: column;
+
+        .header,
+        .footer {
+            flex: none;
+            text-shadow: 1px 1px 3px black;
+        }
+
+        >.header {
+            font-size: 18px;
+            padding: 15px 0;
+            display: flex;
+
+            >* {
+                flex: none;
+            }
+
+            .logo {
+                padding-right: 30px;
+            }
+
+            >.search {
+                padding: 15px 0 15px 15px;
+
+                input {
+                    border: none;
+                    background-color: #ffffff6e;
+                    font-size: 14px;
+                    padding: 7px 20px;
+                    border-radius: 99px;
+                    outline: none;
+                    color: $default-text-color;
+                    transition: all $transition-time;
+                    width: 80px;
+
+                    &::-webkit-input-placeholder,
+                    &::-moz-placeholder {
+                        color: $default-text-color;
+                    }
+
+                    &:focus {
+                        width: 150px;
+                    }
+                }
+            }
+
+            >.item {
+                cursor: pointer;
+                padding: 15px 20px;
+
+                &:hover {
+                    opacity: .8;
+                }
+            }
+
+            >.space {
+                flex: auto;
+            }
+        }
+
+        >.footer {
+            text-align: center;
+            font-size: 13px;
+            letter-spacing: 1px;
+            padding: 15px 0;
+        }
+
+        >.content {
+            flex: auto;
+
+
+            .onesay {
+                display: flex;
+                height: 100%;
+                justify-content: center;
+                align-items: center;
+
+                .text {
+                    position: relative;
+                    font-size: 36px;
+                    text-shadow: 3px 3px 8px #00000075;
+
+                    >p {
+                        animation: fade-up 1s ease 2s both;
+                    }
+
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        right: 0;
+                        height: 5px;
+                        background-color: white;
+                        animation: line 1s ease 1.5s both;
+
+                    }
+                }
+            }
+
+        }
+
+    }
+
+
+    @keyframes line {
+        from {
+            opacity: 0;
+            transform: scaleX(.3)
+        }
+
+        30% {
+            opacity: 1;
+            transform: scaleX(.3)
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+            transform: scaleX(1) scaleY(0.5)
+        }
+    }
+
+
+    @keyframes fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+
+        to {
+
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+
+    @keyframes fade-blur {
+        to {
+            filter: blur($background-blur);
+            transform: scale($background-scale);
+        }
+    }
+
+}
