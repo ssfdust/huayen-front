@@ -1,6 +1,6 @@
 <template>
-    <div class="main" :class="{blur:blur}" @click="switch_blur">
-        <div class="background" :style="{backgroundImage: `url(${background})`}"></div>
+    <div class="main" :class="{blur:blur}" @click="switch_blur" ref="application">
+        <div ref="background" class="background" :style="{backgroundImage: `url(${background})`}"></div>
         <div class="container">
             <div class="header">
                 <div class="space"></div>
@@ -26,24 +26,29 @@ export default {
     name: 'huayen',
     data () {
         return {
+            isLoading: true,
             blur: false,
             lineAnimed: false,
             textAnimed: false,
             onesay: '南无大方广佛华严经，华严海会佛菩萨',
             quote: '《大方广佛华严经》',
-            background: require('../assets/default_bg.jpg')
+            background: null
         }
     },
     mounted() {
+        let loader = this.create_loader()
         this.get_one_say()
-        // this.get_bg_img()
-        setTimeout(() => this.lineAnimed = true, 1500)
-        setTimeout(() => this.textAnimed = true, 2000)
-        setTimeout(() => this.blur = true, 2500)
+        this.get_bg_img(loader)
     },
     methods: {
         switch_blur() {
             this.blur = !this.blur
+        },
+        create_loader() {
+            return this.$loading.show({
+                container: this.$refs.application,
+                blur: "15px"
+            })
         },
         get_one_say() {
             this.axios({
@@ -51,16 +56,32 @@ export default {
                 url: '/api/huayen/onesay'
             }).then(({ data: resp }) => {
                 this.onesay = resp.data.onesay
+                this.quote = `《${resp.data.chapter}》`
             })
         },
-        get_bg_img() {
+        get_bg_img(loader) {
             let device = this.$isMobile() ? "mobile" : "pc"
             this.axios({
                 method: 'get',
                 url: `/api/img/bg?device=${device}`
             }).then(({ data: resp }) => {
-                this.background = resp.data.url
+                this.load_background_img(resp.data.url, loader)
             })
+        },
+        load_background_img(img_src, loader) {
+            let img_inst = new Image()
+            let self = this
+            img_inst.onload = function () {
+                self.background = img_src
+                self.$refs.background.classList.add("fade-in-image")
+                loader.hide()
+                setTimeout(() => {
+                    self.lineAnimed = true
+                    self.textAnimed = true
+                    self.blur = true
+                }, 1000)
+            }
+            img_inst.src = img_src
         }
     }
 }
