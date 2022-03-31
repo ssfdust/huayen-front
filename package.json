@@ -42,7 +42,13 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+        "indent": ["warn", 4],
+        "no-empty": "warn",
+        "no-unused-vars": "warn",
+        "linebreak-style": ["warn", "unix"],
+        "quotes": ["warn", "single", { "avoidEscape": true, "allowTemplateLiterals": true }]
+    }
   },
   "browserslist": [
     "> 1%",
