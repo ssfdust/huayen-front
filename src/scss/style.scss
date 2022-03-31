@@ -5,40 +5,7 @@ $background-blur: 10px;
 $background-scale: 1.03;
 
 * {
-
     box-sizing: border-box;
-}
-
-.fade-in-image {
-  animation: fadeIn 5s;
-  -webkit-animation: fadeIn 5s;
-  -moz-animation: fadeIn 5s;
-  -o-animation: fadeIn 5s;
-  -ms-animation: fadeIn 5s;
-}
-@keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
-
-@-moz-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
-
-@-webkit-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
-
-@-o-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
-
-@-ms-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
 }
 
 .main {
@@ -46,6 +13,30 @@ $background-scale: 1.03;
     height: 100%;
     font-family: Raleway, sans-serif;
     background-color: $default-bg-color;
+
+    .lodaer {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        background: #ffffffaf;
+        backdrop-filter: blur(15px);
+        transition: all $transition-time;
+        opacity: 0;
+        transform: scale(2);
+
+        &.active {
+            visibility: visible;
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 
     .background,
     .container {
