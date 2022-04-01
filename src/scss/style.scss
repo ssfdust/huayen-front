@@ -210,10 +210,10 @@ $max-screen: 1200px;
 
                     @media (min-width: $min-screen) and (max-width: $max-screen) {
                         >p.phrase {
-                            font-size: calc($min-onesay-font-size + (2 - 1.4) * ((100vw - $min-screen) / (1200 - 800)));
+                            font-size: calc(#{$min-onesay-font-size} + (2 - 1.4) * ((100vw - #{$min-screen}) / (1200 - 800)));
                         }
                         >p.quote {
-                            font-size: calc($min-quote-font-size + (2 - 1.4) * ((100vw - $min-screen) / (1200 - 800)));
+                            font-size: calc(#{$min-quote-font-size} + (2 - 1.4) * ((100vw - #{$min-screen}) / (1200 - 800)));
                         }
                     }
 
