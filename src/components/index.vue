@@ -29,7 +29,7 @@
                 <div class="onesay">
                     <div class="text" :class="{'line-animed':lineAnimed, 'text-animed':textAnimed}">
                         <p class="phrase">{{ onesay }}</p>
-                        <p class="quote" v-show="quote">——{{ quote }}</p>
+                        <p class="quote" v-show="quote">{{ quote }}</p>
                     </div>
                 </div>
             </div>
