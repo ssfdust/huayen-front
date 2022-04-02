@@ -1,5 +1,5 @@
 <template>
-    <div class="main" :class="{blur:blur}" @click="switch_blur" ref="application">
+    <div class="main" :class="{blur:blur}" @click="switch_blur_and_extra_action" ref="application">
         <div class="lodaer" :class="{active:isLoading}">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38" width="64" height="64" stroke="#000">
                 <g fill="none" fill-rule="evenodd">
@@ -29,7 +29,7 @@
                 <div class="onesay">
                     <div class="text" :class="{'line-animed':lineAnimed, 'text-animed':textAnimed}">
                         <p class="phrase">{{ onesay }}</p>
-                        <p class="quote" v-show="quote">——{{ quote }}</p>
+                        <p class="quote" v-show="quote">{{ quote }}</p>
                     </div>
                 </div>
             </div>
@@ -47,6 +47,8 @@ export default {
         return {
             isLoading: true,
             blur: false,
+            times: 0,
+            timeout_mark: null,
             lineAnimed: false,
             textAnimed: false,
             onesay: '南无大方广佛华严经，华严海会佛菩萨',
@@ -59,17 +61,35 @@ export default {
         this.get_bg_img()
     },
     methods: {
-        switch_blur() {
-            this.blur = !this.blur
+        switch_animed() {
+            this.textAnimed = !this.textAnimed
+            this.lineAnimed = !this.lineAnimed
         },
-        /**
-         * @deprecated
-         */
-        create_loader() {
-            return this.$loading.show({
-                container: this.$refs.application,
-                blur: "15px"
-            })
+        clear_timeout() {
+            if (this.timeout_mark != null) {
+                clearTimeout(this.timeout_mark)
+            }
+        },
+        switch_blur_and_extra_action() {
+            this.clear_timeout()
+            this.blur = !this.blur
+            let self = this
+            this.times += 1
+            if (this.times === 10) {
+                this.times = 0
+                this.switch_animed()
+                this.axios({
+                    method: 'get',
+                    url: '/api/huayen/update'
+                }).then(() => {
+                    this.get_one_say()
+                    this.switch_animed()
+                })
+            }
+            this.timeout_mark = setTimeout(()=>{
+                self.times = 0
+            }, 10000)
+            console.log(this.times)
         },
         get_one_say() {
             this.axios({

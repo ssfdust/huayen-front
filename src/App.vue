@@ -9,6 +9,23 @@ export default {
 </script>
 
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body:before {
+    width: 100%;
+    height: 100%;
+    content: ' ';
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    background: #fff;
+}
+
 html,
 body {
     width: 100%;
